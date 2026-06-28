@@ -39,7 +39,6 @@
   { "cat": "ad", "title": "Colab", "desc": "谷歌云端 Python 代码笔记。", "url": "https://colab.new/", "hideOnMobile": true },
   { "cat": "audio", "title": "Suno", "desc": "AI音乐生成模型", "url": "https://suno.com/" },
  
-  { "cat": "audio", "title": "Fish Audio", "desc": "最佳AI文字转语音和免费语音克隆。", "url": "https://fish.audio/zh-CN/discovery/" },
   { "cat": "audio", "title": "TTSMaker", "desc": "在线文本转换语音。", "url": "https://ttsmaker.com/" },
   { "cat": "audio", "title": "VoxCPM2 ", "desc": "多语种免费语音克隆。", "url": "https://huggingface.co/spaces/openbmb/VoxCPM-Demo" },
   { "cat": "audio", "title": "SoulX-Singer", "desc": "在线歌声克隆", "url": "https://huggingface.co/spaces/Soul-AILab/SoulX-Singer" },
