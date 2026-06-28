@@ -7,10 +7,11 @@
   { "cat": "text", "title": "Codex", "desc": "代码编辑器。", "url": "https://chatgpt.com/codex/cloud", "isTop": true },
   { "cat": "image", "title": "GPT-Image 2", "desc": "GPT-Image 2 图像生成模型", "url": "https://chat.openai.com/", "isTop": true },
   { "cat": "video", "title": "Seedance 2.0", "desc": "每天5条10秒视频豆包免费生成。", "url": "https://www.doubao.com/chat/create-image", "isTop": true },
-  { "cat": "image", "title": "Photopea", "desc": "在线PS，图形图层在线编辑器。", "url": "https://www.photopea.com/", "isTop": true },
-  
-  { "cat": "video", "title": "OpenCut", "desc": "在线视频编辑工具。", "url": "https://opencut.app/projects", "isTop": true },
   { "cat": "ad", "title": "Cloud Studio", "desc": "每天免费领2小时T4-GPU算力。", "url": "https://cloudstudio.net/user-center", "isTop": true  },
+
+  
+  { "cat": "image", "title": "Photopea", "desc": "在线PS，图形图层在线编辑器。", "url": "https://www.photopea.com/", "isTop": true },
+  { "cat": "video", "title": "OpenCut", "desc": "在线视频编辑工具。", "url": "https://opencut.app/projects", "isTop": true },
   { "cat": "ad", "title": "MagicArena", "desc": "在线图像与视频模型对战。", "url": "https://aigcarena.com/", "isTop": true  },
   { "cat": "ad", "title": "Detection Fake", "desc": "腾讯朱雀文视图鉴伪。", "url": "https://matrix.tencent.com/ai-detect/", "isTop": true  },
   
@@ -36,9 +37,7 @@
   { "cat": "image", "title": "NanoBananaPro", "desc": "Banana 官网图像生成", "url": "https://labs.google/fx/zh/tools/flow"},
 
   { "cat": "ad", "title": "Colab", "desc": "谷歌云端 Python 代码笔记。", "url": "https://colab.new/", "hideOnMobile": true },
- 
   { "cat": "audio", "title": "Suno", "desc": "AI音乐生成模型", "url": "https://suno.com/" },
-  { "cat": "tool", "title": "Edge", "desc": "音乐下载获取", "url": " https://microsoftedge.microsoft.com/addons/detail/suno-downloader/fbfljoebmgleddlgpnklcnkdpmehehlc" },
  
   { "cat": "audio", "title": "Fish Audio", "desc": "最佳AI文字转语音和免费语音克隆。", "url": "https://fish.audio/zh-CN/discovery/" },
   { "cat": "audio", "title": "TTSMaker", "desc": "在线文本转换语音。", "url": "https://ttsmaker.com/" },
