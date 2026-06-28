@@ -6,20 +6,20 @@
 
   { "cat": "tool", "title": "Web Ping", "desc": "网站负载时延情况。", "url": "https://ping.chinaz.com/realfake.top", "isTop": true  },
   { "cat": "text", "title": "Codex", "desc": "代码编辑器。", "url": "https://chatgpt.com/codex/cloud", "isTop": true },
-  { "cat": "text", "title": "GPT-Image 2", "desc": "GPT-Image 2 图像生成模型", "url": "https://chat.openai.com/", "isTop": true },
+  { "cat": "image", "title": "GPT-Image 2", "desc": "GPT-Image 2 图像生成模型", "url": "https://chat.openai.com/", "isTop": true },
 
   { "cat": "video", "title": "Seedance 2.0", "desc": "每天5条10秒视频豆包免费生成。", "url": "https://www.doubao.com/chat/create-image", "isTop": true },
   
   { "cat": "image", "title": "Photopea", "desc": "在线PS，图形图层在线编辑器。", "url": "https://www.photopea.com/"},
   { "cat": "video", "title": "OpenCut", "desc": "在线视频编辑工具。", "url": "https://opencut.app/projects", "isTop": true },
+  { "cat": "ad", "title": "Cloud Studio", "desc": "每天免费领2小时T4-GPU算力。", "url": "https://cloudstudio.net/user-center", "isTop": true  },
+  { "cat": "ad", "title": "MagicArena", "desc": "在线图像与视频模型对战。", "url": "https://aigcarena.com/", "isTop": true  },
+  { "cat": "ad", "title": "Detection Fake", "desc": "腾讯朱雀文视图鉴伪。", "url": "https://matrix.tencent.com/ai-detect/", "isTop": true  },
+  { "cat": "tool", "title": "BBN Speed Test", "desc": "北京联通宽带测速。", "url": "http://cs1.bbn.com.cn:8800/gzweb/", "isTop": true  },
+
   { "cat": "ad", "title": "AI-工具集", "desc": "发现最新AI产品工具和使用技巧。", "url": "https://ai-bot.cn/ai-tools/"},
 
   { "cat": "text", "title": "AI-信息", "desc": "AI 自动挑选的高价值内容。", "url": "https://aihot.virxact.com", "isTop": true },
-  { "cat": "ad", "title": "Cloud Studio", "desc": "每天免费领2小时T4-GPU算力。", "url": "https://cloudstudio.net/user-center", "isTop": true  },
-
-
-  { "cat": "tool", "title": "BBN Speed Test", "desc": "北京联通宽带测速。", "url": "http://cs1.bbn.com.cn:8800/gzweb/", "isTop": true  },
-  
 
   { "cat": "text", "title": "谷歌翻译", "desc": "谷歌文档文字在线翻译。", "url": "https://translate.google.com/", "isTop": true },
 
@@ -29,8 +29,6 @@
   { "cat": "text", "title": "Claude Code", "desc": "终端代码编辑器", "url": "https://claude.ai/code/disabled", "isTop": true },
   { "cat": "text", "title": "Keys", "desc": "OpenAI API 密钥管理。", "url": "https://platform.openai.com/api-keys", "isTop": true },
   
-  { "cat": "ad", "title": "Detection Fake", "desc": "腾讯朱雀文视图鉴伪。", "url": "https://matrix.tencent.com/ai-detect/", "isTop": true  },
-  { "cat": "ad", "title": "MagicArena", "desc": "在线图像与视频模型对战。", "url": "https://aigcarena.com/", "isTop": true  },
   
   { "cat": "multi", "title": "LightX2V", "desc": "图像视频生成平台。", "url": "https://x2v.light-ai.top/generate" },
   { "cat": "multi", "title": "TapNow", "desc": "AI视觉创作引擎", "url":"https://www.tapnow.ai/referral/xEyLCori"},
@@ -45,19 +43,8 @@
   { "cat": "image", "title": "Midjourney", "desc": "艺术级 AI 绘图生成工具。", "url": "https://www.midjourney.com/explore?tab=top" },
   { "cat": "image", "title": "FLUX.2-klein-9B", "desc": "在线图生图模型", "url": "https://huggingface.co/spaces/black-forest-labs/FLUX.2-klein-9B" },
   { "cat": "image", "title": "Qwen-Image-Edit", "desc": "开源在线图像修改。", "url": "https://huggingface.co/spaces/multimodalart/Qwen-Image-Edit-Fast" },
-  { "cat": "image", "title": "bonsai-image-webgpu", "desc": "文生图网页端运行。", "url": "https://huggingface.co/spaces/webml-community/bonsai-image-webgpu" },
 
   { "cat": "ad", "title": "Colab", "desc": "谷歌云端 Python 代码笔记。", "url": "https://colab.new/", "hideOnMobile": true },
-  { "cat": "tool", "title": "船舶定位", "desc": "全球船舶位置动态跟踪。", "url": "http://www.shipxy.com/" },
-  { "cat": "tool", "title": "航班定位", "desc": "实时航班跟踪。", "url": "https://zh.flightaware.com/live/" },
-  { "cat": "tool", "title": "koboldcpp", "desc": "电脑运行GGUF模型。", "url": "https://github.com/LostRuins/koboldcpp" },
-  { "cat": "tool", "title": "PocketPal", "desc": "手机运行GGUF模型。", "url": "https://github.com/a-ghorbani/pocketpal-ai" },
-  { "cat": "tool", "title": "YAY", "desc": "Android ADB 桌面应用。", "url": "https://github.com/liriliri/aya" },
-  { "cat": "tool", "title": "Disk Recovery", "desc": "磁盘数据恢复。", "url": "https://www.cgsecurity.org/wiki/TestDisk_Download" },
-  
-  { "cat": "tool", "title": "Termux", "desc": "Android 终端模拟器。", "url": "https://github.com/termux/termux-app" },
-
-  { "cat": "tool", "title": "Github", "desc": "Github 桌面版。", "url": "https://desktop.github.com/download/" },
  
   { "cat": "audio", "title": "Suno", "desc": "AI音乐生成模型", "url": "https://suno.com/" },
   { "cat": "audio", "title": "Fish Audio", "desc": "最佳AI文字转语音和免费语音克隆。", "url": "https://fish.audio/zh-CN/discovery/" },
