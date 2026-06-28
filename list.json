@@ -1,25 +1,20 @@
 [
   { "cat": "ad", "title": "Leaderboard", "desc": "模型排行榜", "url": "https://artificialanalysis.ai/", "isTop": true }, 
   { "cat": "audio", "title": "Spotify", "desc": "播客音乐收藏。", "url": "https://open.spotify.com/playlist/7wMMco198E9HdkxzNlYuoU", "isTop": true }, 
-  
   { "cat": "text", "title": "Artificial Intelligence", "desc": "人工智能领域相关论文", "url": "https://arxiv.org/list/cs.AI/recent" },
-  { "cat": "ad", "title": "Models", "desc": "HuggingFace 镜像站。", "url": "https://hf-mirror.com/", "isTop": true },
+  { "cat": "tool", "title": "Web Ping", "desc": "网站负载时延情况。", "url": "https://ping.chinaz.com/realfake.top", "isTop": true  },
   { "cat": "text", "title": "Codex", "desc": "代码编辑器。", "url": "https://chatgpt.com/codex/cloud", "isTop": true },
   { "cat": "text", "title": "GPT-Image 2", "desc": "GPT-Image 2 图像生成模型", "url": "https://chat.openai.com/", "isTop": true },
 
   { "cat": "video", "title": "Seedance 2.0", "desc": "每天5条10秒视频豆包免费生成。", "url": "https://www.doubao.com/chat/create-image", "isTop": true },
-  { "cat": "ad", "title": "API MD", "desc": "API 测试 MD 编辑", "url": "/aigc", "isTop": true },
   
-  { "cat": "image", "title": "Mspaint", "desc": "在线画图工具。", "url": "https://datxy.com/mspaint", "isTop": true },
   { "cat": "image", "title": "Photopea", "desc": "在线PS，图形图层在线编辑器。", "url": "https://www.photopea.com/"},
   { "cat": "video", "title": "OpenCut", "desc": "在线视频编辑工具。", "url": "https://opencut.app/projects", "isTop": true },
   { "cat": "ad", "title": "AI-工具集", "desc": "发现最新AI产品工具和使用技巧。", "url": "https://ai-bot.cn/ai-tools/"},
-  { "cat": "text", "title": "AI-吐槽", "desc": "AI 豆包等模型吐槽留言。", "url": "https://tcq233.com/btv", "isTop": true },
 
   { "cat": "text", "title": "AI-信息", "desc": "AI 自动挑选的高价值内容。", "url": "https://aihot.virxact.com", "isTop": true },
-  { "cat": "tool", "title": "GPU Test", "desc": "GPU 显卡极限压力测试。", "url": "https://datxy.com/gpu", "isTop": true  },
   { "cat": "ad", "title": "Cloud Studio", "desc": "每天免费领2小时T4-GPU算力。", "url": "https://cloudstudio.net/user-center", "isTop": true  },
-  { "cat": "tool", "title": "Web Ping", "desc": "网站负载时延情况。", "url": "https://ping.chinaz.com/datxy.com", "isTop": true  },
+
 
 
 
@@ -74,7 +69,6 @@
   { "cat": "tool", "title": "屏幕刷新", "desc": "显示器测试。", "url": "https://www.shijuezu.com/" },
   { "cat": "tool", "title": "鼠标测试", "desc": "鼠标的轮询速率。", "url": "https://cps-check.com/cn/polling-rate-check" },
   { "cat": "tool", "title": "手柄测试", "desc": "游戏手柄测试。", "url": "https://hardwaretester.com/gamepad" },
-  { "cat": "tool", "title": "分贝", "desc": "声音分贝查看", "url": "https://datxy.com/dB.html" },
  
   { "cat": "tool", "title": "LLM 本地测试", "desc": "测你机器能部署哪些模型。", "url": "https://www.canirun.ai/" },
   { "cat": "tool", "title": "Github", "desc": "Github 桌面版。", "url": "https://desktop.github.com/download/" },
