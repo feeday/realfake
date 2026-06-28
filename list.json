@@ -1,7 +1,7 @@
 [
   { "cat": "ad", "title": "Leaderboard", "desc": "模型排行榜", "url": "https://artificialanalysis.ai/", "isTop": true }, 
   { "cat": "audio", "title": "Spotify", "desc": "播客音乐收藏。", "url": "https://open.spotify.com/playlist/7wMMco198E9HdkxzNlYuoU", "isTop": true }, 
-  { "cat": "text", "title": "Artificial Intelligence", "desc": "人工智能领域相关论文", "url": "https://arxiv.org/list/cs.AI/recent" },
+  { "cat": "text", "title": "Artificial Intelligence", "desc": "人工智能领域相关论文", "url": "https://arxiv.org/list/cs.AI/recent", "isTop": true },
   { "cat": "image", "title": "NanoBananaPro", "desc": "Banana 官网图像生成", "url": "https://labs.google/fx/zh/tools/flow"},
 
   { "cat": "tool", "title": "Web Ping", "desc": "网站负载时延情况。", "url": "https://ping.chinaz.com/realfake.top", "isTop": true  },
