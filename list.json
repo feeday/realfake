@@ -1,5 +1,7 @@
 [
   { "cat": "ad", "title": "Leaderboard", "desc": "模型排行榜", "url": "https://artificialanalysis.ai/", "isTop": true }, 
+  { "cat": "audio", "title": "Spotify", "desc": "播客音乐收藏。", "url": "https://open.spotify.com/playlist/7wMMco198E9HdkxzNlYuoU", "isTop": true }, 
+  
   { "cat": "text", "title": "Artificial Intelligence", "desc": "人工智能领域相关论文", "url": "https://arxiv.org/list/cs.AI/recent" },
   { "cat": "ad", "title": "Models", "desc": "HuggingFace 镜像站。", "url": "https://hf-mirror.com/", "isTop": true },
   { "cat": "text", "title": "Codex", "desc": "代码编辑器。", "url": "https://chatgpt.com/codex/cloud", "isTop": true },
@@ -97,7 +99,7 @@
   { "cat": "audio", "title": "Radio", "desc": "全球广播电台。", "url": "https://radio.garden/" },
   { "cat": "audio", "title": "云听", "desc": "中央广播电台。", "url": "https://www.radio.cn/pc-portal/erji/radioStation.html" },
   { "cat": "audio", "title": "有声书", "desc": "喜马拉雅有声故事。", "url": "https://www.ximalaya.com/youshengshu/updates/" }, 
-  { "cat": "audio", "title": "Spotify", "desc": "在线音乐博客。", "url": "https://open.spotify.com/" }, 
+
   
   { "cat": "video", "title": "LTX-2.3", "desc": "在线图生视频带音效。", "url": "https://huggingface.co/spaces/Lightricks/LTX-2-3" },
   { "cat": "video", "title": "央视新闻", "desc": "央视频电视直播。", "url": "https://www.yangshipin.cn/tv/home?pid=600001811" },
