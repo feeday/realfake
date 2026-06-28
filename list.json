@@ -7,7 +7,7 @@
   { "cat": "text", "title": "Codex", "desc": "代码编辑器。", "url": "https://chatgpt.com/codex/cloud", "isTop": true },
   { "cat": "image", "title": "GPT-Image 2", "desc": "GPT-Image 2 图像生成模型", "url": "https://chat.openai.com/", "isTop": true },
   { "cat": "video", "title": "Seedance 2.0", "desc": "每天5条10秒视频豆包免费生成。", "url": "https://www.doubao.com/chat/create-image", "isTop": true },
-  { "cat": "image", "title": "Photopea", "desc": "在线PS，图形图层在线编辑器。", "url": "https://www.photopea.com/"},
+  { "cat": "image", "title": "Photopea", "desc": "在线PS，图形图层在线编辑器。", "url": "https://www.photopea.com/", "isTop": true },
   
   { "cat": "video", "title": "OpenCut", "desc": "在线视频编辑工具。", "url": "https://opencut.app/projects", "isTop": true },
   { "cat": "ad", "title": "Cloud Studio", "desc": "每天免费领2小时T4-GPU算力。", "url": "https://cloudstudio.net/user-center", "isTop": true  },
