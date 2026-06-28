@@ -48,7 +48,7 @@
   { "cat": "audio", "title": "Whisper", "desc": "开源语音转文字。", "url": "https://huggingface.co/spaces/openai/whisper" },
   { "cat": "audio", "title": "Radio", "desc": "全球广播电台。", "url": "https://radio.garden/" },
   { "cat": "audio", "title": "云听", "desc": "中央广播电台。", "url": "https://www.radio.cn/pc-portal/erji/radioStation.html" },
-  { "cat": "audio", "title": "有声书", "desc": "喜马拉雅有声故事。", "url": "https://www.ximalaya.com/youshengshu/updates/" }, 
+  { "cat": "audio", "title": "故事播客", "desc": "喜马拉雅有声播客。", "url": "https://www.ximalaya.com/youshengshu/updates/" }, 
   
   { "cat": "video", "title": "LTX-2.3", "desc": "在线图生视频带音效。", "url": "https://huggingface.co/spaces/Lightricks/LTX-2-3" },
   { "cat": "video", "title": "央视新闻", "desc": "央视频电视直播。", "url": "https://www.yangshipin.cn/tv/home?pid=600001811" },
