@@ -478,7 +478,7 @@
 
     <div class="fab-top" id="fabTop" onclick="scrollToTop()">↑</div>
 
-    <button class="music-play-btn" id="musicPlayBtn" type="button" title="打开 Spotify 播放完整音乐" aria-label="打开 Spotify 播放完整音乐">♪</button>
+    <button class="music-play-btn" id="musicPlayBtn" type="button" title="当前页打开 Spotify 播放完整音乐" aria-label="当前页打开 Spotify 播放完整音乐">♪</button>
 
     <script>
         // ================== 全局数据存储与分页配置 ==================
@@ -833,7 +833,7 @@
         const spotifyPlaylistUrl = 'https://open.spotify.com/playlist/7wMMco198E9HdkxzNlYuoU?si=ff53781a4840442d';
         if (musicPlayBtn) {
             musicPlayBtn.addEventListener('click', () => {
-                window.open(spotifyPlaylistUrl, '_blank', 'noopener');
+                window.location.href = spotifyPlaylistUrl;
             });
         }
 
