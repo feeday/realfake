@@ -351,67 +351,32 @@
         .fab-top.visible { opacity: 1; transform: translateY(0); }
 
 
-
-        /* ================== PC 音乐播放器 ================== */
-        .desktop-music-player {
-            position: fixed;
-            left: 24px;
-            bottom: 24px;
-            z-index: 1001;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            width: min(360px, calc(100vw - 48px));
-            pointer-events: none;
-        }
+        /* ================== PC 音乐播放按钮 ================== */
         .music-play-btn {
-            width: fit-content;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: var(--radius-pill);
-            padding: 10px 16px;
+            position: fixed;
+            bottom: 84px;
+            right: 30px;
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
             background: rgba(30, 41, 59, 0.9);
-            color: var(--text-primary);
-            font: inherit;
-            font-size: 0.9rem;
-            font-weight: 600;
-            cursor: pointer;
-            box-shadow: 0 12px 34px rgba(0, 0, 0, 0.35);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
-            pointer-events: auto;
-        }
-        .music-play-btn:hover {
-            transform: translateY(-2px);
-            border-color: rgba(30, 215, 96, 0.55);
-            background: rgba(15, 23, 42, 0.95);
-        }
-        .music-play-btn:active { transform: translateY(0); }
-        .music-play-icon {
-            width: 22px;
-            height: 22px;
-            border-radius: 50%;
-            display: inline-flex;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--border-light);
+            color: var(--text-secondary);
+            display: flex;
             align-items: center;
             justify-content: center;
-            background: #1db954;
-            color: #02130a;
-            font-size: 0.75rem;
+            cursor: pointer;
+            transition: 0.3s;
+            z-index: 1000;
+            font-size: 0.95rem;
             line-height: 1;
         }
-        .spotify-player {
-            display: none;
-            width: 100%;
-            height: 152px;
-            border: 0;
-            border-radius: 12px;
-            box-shadow: 0 18px 45px rgba(0, 0, 0, 0.45);
-            pointer-events: auto;
+        .music-play-btn:hover {
+            border-color: rgba(30, 215, 96, 0.65);
+            color: #fff;
         }
-        .desktop-music-player.is-playing .spotify-player { display: block; }
 
         @media (max-width: 768px) {
             .sticky-header-wrapper { padding: 10px; top: 0; padding-top: 10px; padding-bottom: 20px; margin-bottom: 20px; }
@@ -427,7 +392,7 @@
             .copyright-bar { flex-direction: column; gap: 8px; }
             .copyright-divider { display: none; } 
             .hide-on-mobile { display: none !important; }
-            .desktop-music-player { display: none !important; }
+            .music-play-btn { display: none !important; }
         }
     </style>
 </head>
@@ -513,23 +478,7 @@
 
     <div class="fab-top" id="fabTop" onclick="scrollToTop()">↑</div>
 
-    <div class="desktop-music-player" id="desktopMusicPlayer">
-        <button class="music-play-btn" id="musicPlayBtn" type="button" aria-controls="spotifyPlayer" aria-expanded="false">
-            <span class="music-play-icon">▶</span>
-            <span>播放音乐</span>
-        </button>
-        <iframe
-            id="spotifyPlayer"
-            class="spotify-player"
-            data-src="https://open.spotify.com/embed/playlist/7wMMco198E9HdkxzNlYuoU?utm_source=generator&si=ff53781a4840442d"
-            width="100%"
-            height="152"
-            frameborder="0"
-            allowfullscreen=""
-            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-            loading="lazy"
-            title="Spotify playlist player"></iframe>
-    </div>
+    <button class="music-play-btn" id="musicPlayBtn" type="button" title="打开 Spotify 播放完整音乐" aria-label="打开 Spotify 播放完整音乐">♪</button>
 
     <script>
         // ================== 全局数据存储与分页配置 ==================
@@ -879,19 +828,12 @@
         function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
 
 
-
         // ================== PC 音乐播放按钮 ==================
-        const musicPlayer = document.getElementById('desktopMusicPlayer');
         const musicPlayBtn = document.getElementById('musicPlayBtn');
-        const spotifyPlayer = document.getElementById('spotifyPlayer');
-        if (musicPlayBtn && spotifyPlayer && musicPlayer) {
+        const spotifyPlaylistUrl = 'https://open.spotify.com/playlist/7wMMco198E9HdkxzNlYuoU?si=ff53781a4840442d';
+        if (musicPlayBtn) {
             musicPlayBtn.addEventListener('click', () => {
-                if (!spotifyPlayer.src) {
-                    spotifyPlayer.src = spotifyPlayer.dataset.src;
-                }
-                musicPlayer.classList.add('is-playing');
-                musicPlayBtn.setAttribute('aria-expanded', 'true');
-                musicPlayBtn.querySelector('span:last-child').innerText = '正在播放 Spotify';
+                window.open(spotifyPlaylistUrl, '_blank', 'noopener');
             });
         }
 
