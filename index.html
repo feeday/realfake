@@ -677,6 +677,38 @@
             background: currentColor;
         }
 
+        .action-links {
+            margin-top: -6px;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+        }
+
+        .action-link {
+            min-height: 42px;
+            padding: 0 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(var(--cyan-rgb), .38);
+            border-radius: 13px;
+            color: var(--cyan);
+            background: rgba(5, 10, 26, .56);
+            box-shadow: inset 0 0 20px rgba(var(--cyan-rgb), .045), 0 0 22px rgba(var(--cyan-rgb), .035);
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: .06em;
+            text-decoration: none;
+            transition: transform .2s ease, border-color .2s ease, background .2s ease, box-shadow .2s ease;
+        }
+
+        .action-link:hover {
+            transform: translateY(-2px);
+            border-color: rgba(var(--cyan-rgb), .68);
+            background: linear-gradient(145deg, rgba(var(--cyan-rgb), .12), rgba(var(--violet-rgb), .08));
+            box-shadow: inset 0 0 20px rgba(var(--cyan-rgb), .055), 0 0 24px rgba(var(--cyan-rgb), .07);
+        }
+
         .privacy-note {
             margin: -7px 0 0;
             display: flex;
@@ -1459,6 +1491,11 @@
                         <span class="button-symbol" aria-hidden="true"></span>
                         <span id="button-text">启动深度鉴真</span>
                     </button>
+
+                    <div class="action-links" aria-label="快捷链接">
+                        <a class="action-link" href="https://matrix.tencent.com/ai-detect/" target="_blank" rel="noopener noreferrer">国内鉴伪测试图文视</a>
+                        <a class="action-link" href="https://hivemoderation.com/visual-moderation" target="_blank" rel="noopener noreferrer">国外鉴伪测试图音视</a>
+                    </div>
 
                     <p id="key-privacy" class="privacy-note">
                         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10V7a5 5 0 0 1 10 0v3M6 10h12v10H6z"/></svg>
