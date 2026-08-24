@@ -62,7 +62,7 @@ audio { outline: none; }
   
   
   /* ================= 顶部搜索框特有样式 ================= */
-.search-card { padding: 12px 15px; display: flex; align-items: center; justify-content: center; }
+.search-card { padding:14px 16px; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg,#fff,#f7fbff); border-radius:18px; box-shadow:0 6px 20px rgba(0,0,0,.06); }
 .search-wrapper { display: flex; align-items: center; width: 100%; position: relative; }
 .custom-select { position: relative; display: flex; align-items: center; cursor: pointer; user-select: none; }
 .select-trigger { display: flex; align-items: center; font-size: 14px; font-weight: bold; color: #333; }
@@ -230,10 +230,14 @@ audio { outline: none; }
         </div>
     </div>
     
-    <input type="text" id="apiProxy" class="input-style" placeholder="🌐 自定义 API URL" />
-    <input type="password" id="apiKey" class="input-style" placeholder="🔑 API Key" />
+    <input type="text" id="apiProxy" class="input-style" value="https://api.apimart.ai/v1" placeholder="🌐 第三代代理地址" />
+    <input type="password" id="apiKey" class="input-style" placeholder="🔑 第三代代理 Key" />
     
-    <select id="unifiedModel" class="input-style" onchange="onModelChange()">
+    
+<input type="text" id="customModel" class="input-style"
+placeholder="🤖 自定义模型名称，例如 gpt-5 / claude-4 / qwen-max" />
+
+<select id="unifiedModel" class="input-style" onchange="onModelChange()">
         
         <optgroup label="💬 文本对话">
             <option value="gemini-3.1-pro-preview">Gemini-3.1-pro-preview</option>
@@ -290,6 +294,7 @@ window.addEventListener('load', () => {
 
     const savedProxy = localStorage.getItem('suishouji_api_proxy') || localStorage.getItem('pixel_api_proxy');
     if (savedProxy) document.getElementById('apiProxy').value = savedProxy;
+    else document.getElementById('apiProxy').value='https://api.apimart.ai/v1';
 
     const loadTime = performance.now();
     const perfElem = document.getElementById('performance-result');
@@ -359,7 +364,7 @@ function checkKeyRequirement(model) {
 }
 
 function onModelChange() {
-    const model = document.getElementById('unifiedModel').value;
+    const model = document.getElementById('customModel').value.trim() || document.getElementById('unifiedModel').value;
     const apiKeyInput = document.getElementById('apiKey');
     const proxyInput = document.getElementById('apiProxy');
     const imageOptionsWrapper = document.getElementById('imageOptionsWrapper');
@@ -498,7 +503,7 @@ async function fetchAndParseJson(url, options) {
 if(btnCombinedAction) {
     btnCombinedAction.onclick = async () => {
         const content = universalText.value.trim();
-        const model = document.getElementById('unifiedModel').value;
+        const model = document.getElementById('customModel').value.trim() || document.getElementById('unifiedModel').value;
         
         if (!checkKeyRequirement(model)) return;
 
@@ -808,7 +813,7 @@ if(btnAiAction) {
         const content = universalText.value.trim();
         if (!content) return alert("请在文本框输入您的提示词或润色要求！");
         
-        const model = document.getElementById('unifiedModel').value;
+        const model = document.getElementById('customModel').value.trim() || document.getElementById('unifiedModel').value;
         if (model === "comment-wall" || model === "gpt-image-2") return alert("润色功能仅支持选择有效的文本对话模型！");
         if (!checkKeyRequirement(model)) return;
 
@@ -870,7 +875,7 @@ bindEvent("btnExtractPoints", "click", async () => {
     const content = universalText.value.trim();
     if (!content) return alert("请在文本框输入需要提炼的文本内容！");
     
-    const model = document.getElementById('unifiedModel').value;
+    const model = document.getElementById('customModel').value.trim() || document.getElementById('unifiedModel').value;
     if (model === "comment-wall" || model === "gpt-image-2") return alert("提炼功能仅支持选择有效的文本对话模型！");
     if (!checkKeyRequirement(model)) return;
 
