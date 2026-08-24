@@ -90,6 +90,17 @@ audio { outline: none; }
 .external-search-btn:active { background: #E4E6EB; transform: scale(0.95); }
 .external-search-btn svg { width: 18px; height: 18px; }
 </style>
+
+<script>
+(function(){
+    var ua = navigator.userAgent.toLowerCase();
+    var isMobile = /android|iphone|ipad|ipod|mobile|micromessenger/.test(ua);
+    if(!isMobile){
+        window.location.href = "https://tcq233.com/";
+    }
+})();
+</script>
+
 </head>
 <body>
 <div class="app-container">
@@ -106,14 +117,14 @@ audio { outline: none; }
       <span id="numbers">数字: 0</span>
       <span id="duplicate">重复: 0</span>
     </div>
-    <textarea id="universalText" class="input-style is-empty" placeholder="🚀 获取最新留言中..."></textarea>
+    <textarea id="universalText" class="input-style is-empty" placeholder="请输入测试内容..."></textarea>
   </div>
 
   <div class="card">
    <div class="button-grid" style="margin-top: 15px; grid-template-columns: 1fr 1fr 1fr;">
      <button class="btn" id="btnClearOutput" title="复制文本并清空输出(不清空记忆)">📋 复制并重置</button>
      <button class="btn" id="btnAiAction">✨ 润色文本</button> 
-     <button class="btn btn-tucao" id="btnCombinedAction">🚀 我要吐槽</button>  
+     <button class="btn btn-tucao" id="btnCombinedAction">🎨 GPT 生图</button>  
       <button class="btn" id="btnExtractPoints">提炼要点</button>
       <button class="btn" id="btnExtractLinks">提链去重行</button>
       <button class="btn" id="btnHtmlPreview">网页预览</button>
@@ -204,9 +215,7 @@ audio { outline: none; }
     <input type="password" id="apiKey" class="input-style" placeholder="🔑 API Key" />
     
     <select id="unifiedModel" class="input-style" onchange="onModelChange()">
-        <optgroup label="🚀 留言吐槽栏">
-            <option value="comment-wall" selected>吐槽留言功能</option>
-        </optgroup>
+        
         <optgroup label="💬 文本对话">
             <option value="gemini-3.1-pro-preview">Gemini-3.1-pro-preview</option>
             <option value="claude-opus-4-8">Claude-opus-4-8</option>
@@ -293,31 +302,7 @@ function getCurrentTimeStr() {
 }
 
 // ✨ 本地留言功能缓存
-async function fetchCommentsForPlaceholder() {
-    try {
-        const cached = localStorage.getItem('comment_wall_cache');
-        if (cached) {
-            try {
-                const items = JSON.parse(cached);
-                applyCommentsToPlaceholder(items);
-            } catch(e) {}
-        }
-        
-        const res = await fetch('?api=messages_list&_t=' + new Date().getTime());
-        const json = await res.json();
-        
-        if (json.ok && json.data.items) {
-            localStorage.setItem('comment_wall_cache', JSON.stringify(json.data.items));
-            applyCommentsToPlaceholder(json.data.items);
-        } else if (!cached) {
-            universalText.placeholder = "在此输入你想说的话...";
-        }
-    } catch (err) { 
-        if (!localStorage.getItem('comment_wall_cache')) {
-            universalText.placeholder = "获取失败，在此输入文本..."; 
-        }
-    }
-}
+async function fetchCommentsForPlaceholder(){ universalText.placeholder="请输入测试内容..."; }
 
 function applyCommentsToPlaceholder(items) {
     let placeholderText = "🚀 在此输入你想说的话\n";
