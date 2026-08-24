@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -6,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <meta name="referrer" content="same-origin" />
 <title>─=≡Σ((( つ•̀ω•́)つ</title>
-
 <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/qrious@4.0.2/dist/qrious.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/exifr/dist/full.umd.js"></script>
@@ -100,7 +98,34 @@ audio { outline: none; }
 <body>
 <div class="app-container">
 
-  
+     <div class="search-wrapper">
+                <div class="custom-select" id="customSelect">
+                    <div class="select-trigger" onclick="toggleSelect(event)">
+                        <span id="currentEngineText">Bilibili</span>
+                        <svg class="arrow-icon" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+                    </div>
+                    <input type="hidden" id="searchEngineValue" value="https://search.bilibili.com/all?keyword=">
+
+                    <div class="select-options" id="selectOptions">
+              
+                        <div class="option-item" onclick="selectEngine('https://github.com/search?q=', 'Github', this)">Github</div>
+                        <div class="option-item" onclick="selectEngine('https://yandex.by/images/search?text=', 'Yandex', this)">Yandex</div>
+                        <div class="option-item" onclick="selectEngine('https://www.douyin.com/search/', '抖音', this)">Douyin</div>
+                        <div class="option-item" onclick="selectEngine('https://search.bilibili.com/all?keyword=', 'B站', this)">Bilibili</div>
+                        <div class="option-item" onclick="selectEngine('https://www.baidu.com/s?q2=', '百度', this)">Baidu</div>          
+                    </div>
+                </div>
+                
+                <div class="search-inner-divider"></div>
+
+                <input type="text" class="search-input" id="searchInput" placeholder="搜索标题或简介..." autocomplete="off">
+                <span class="search-clear" id="searchClear" onmousedown="event.preventDefault()" onclick="clearSearch()">✕</span>
+                
+                <div class="external-search-btn" id="externalSearchBtn" title="搜索">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                </div>
+            </div>
+    
   
   <div class="card">
     <input type="file" id="universalFile" class="input-style" accept="image/*,audio/*,video/*" />
