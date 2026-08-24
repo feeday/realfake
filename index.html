@@ -98,8 +98,33 @@ audio { outline: none; }
 <body>
 <div class="app-container">
 
-  
-             
+     <div class="search-wrapper">
+                <div class="custom-select" id="customSelect">
+                    <div class="select-trigger" onclick="toggleSelect(event)">
+                        <span id="currentEngineText">Bilibili</span>
+                        <svg class="arrow-icon" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+                    </div>
+                    <input type="hidden" id="searchEngineValue" value="https://search.bilibili.com/all?keyword=">
+
+                    <div class="select-options" id="selectOptions">
+              
+
+                        <div class="option-item" onclick="selectEngine('https://www.douyin.com/search/', '抖音', this)">Douyin</div>
+                        <div class="option-item" onclick="selectEngine('https://search.bilibili.com/all?keyword=', 'B站', this)">Bilibili</div>
+                        <div class="option-item" onclick="selectEngine('https://www.baidu.com/s?q2=', '百度', this)">Baidu</div>
+<div class="option-item" onclick="selectEngine('https://search.cctv.com/search.php?qtext=', '央视', this)">央视</div>          
+                    </div>
+                </div>
+                
+                <div class="search-inner-divider"></div>
+
+                <input type="text" class="search-input" id="searchInput" placeholder="搜索标题或简介..." autocomplete="off">
+                <span class="search-clear" id="searchClear" onmousedown="event.preventDefault()" onclick="clearSearch()">✕</span>
+                
+                <div class="external-search-btn" id="externalSearchBtn" title="搜索">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                </div>
+            </div>
     
   
   <div class="card">
@@ -112,34 +137,6 @@ audio { outline: none; }
       <span id="numbers">数字: 0</span>
       <span id="duplicate">重复: 0</span>
     </div>
-
- <div class="custom-select" id="customSelect">
-                    <div class="select-trigger" onclick="toggleSelect(event)">
-                        <span id="currentEngineText">Bilibili</span>
-                        <svg class="arrow-icon" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
-                    </div>
-                    <input type="hidden" id="searchEngineValue" value="https://search.bilibili.com/all?keyword=">
-
-                    <div class="select-options" id="selectOptions">
-              
-
-                        <div class="option-item" onclick="selectEngine('https://www.douyin.com/search/', '抖音', this)">Douyin</div>
-                        <div class="option-item" onclick="selectEngine('https://search.bilibili.com/all?keyword=', 'B站', this)">Bilibili</div>
-                        <div class="option-item" onclick="selectEngine('https://www.baidu.com/s?q2=', '百度', this)">Baidu</div>          
-                    </div>
-                </div>
-                
-                <div class="search-inner-divider"></div>
-
-                <input type="text" class="search-input" id="searchInput" placeholder="搜索标题或简介..." autocomplete="off">
-                <span class="search-clear" id="searchClear" onmousedown="event.preventDefault()" onclick="clearSearch()">✕</span>
-                
-                <div class="external-search-btn" id="externalSearchBtn" title="搜索">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                </div>
-      
-
-    
     <textarea id="universalText" class="input-style is-empty" placeholder="请输入测试内容..."></textarea>
   </div>
 
@@ -235,11 +232,22 @@ audio { outline: none; }
     </div>
     
     <input type="text" id="apiProxy" class="input-style" value="https://api.apimart.ai/v1" placeholder="🌐 第三代代理地址" />
-    <input type="password" id="apiKey" class="input-style" placeholder="🔑 第三代代理 Key" />
+    <input type="password" id="apiKey" class="input-style" placeholder="🔑 统一 API Key" />
+
+<select id="apiMode" class="input-style">
+<option value="cloud">☁️ 云端 API</option>
+<option value="local">💻 本地离线 API</option>
+</select>
+
+<select id="modelType" class="input-style">
+<option value="text">💬 文本模型</option>
+<option value="image">🎨 图像模型</option>
+<option value="vision">👁️ 多模态模型</option>
+</select>
     
     
 <input type="text" id="customModel" class="input-style"
-placeholder="🤖 自定义模型名称，例如 gpt-5 / claude-4 / qwen-max" />
+placeholder="🤖 模型名称(云端/本地均支持): gpt-5、qwen3、ollama模型、vLLM模型" />
 
 <select id="unifiedModel" class="input-style" onchange="onModelChange()">
         
@@ -256,7 +264,7 @@ placeholder="🤖 自定义模型名称，例如 gpt-5 / claude-4 / qwen-max" />
         </optgroup>
     </select>
     <a href="#">
-    <img src="https://tool.lu/netcard/" title="吐槽墙" alt="吐槽墙" style="width: 100%; height: auto; display: block; border-radius: 8px;" />
+    <img src="https://tool.lu/netcard/" title="AI工作台" alt="AI工作台" style="width: 100%; height: auto; display: block; border-radius: 8px;" />
   </a>
   </div>
 </div>
@@ -335,7 +343,7 @@ async function fetchCommentsForPlaceholder(){ universalText.placeholder="请输�
 function applyCommentsToPlaceholder(items) {
     let placeholderText = "🚀 在此输入你想说的话\n";
     items.forEach(item => { 
-        placeholderText += "吐槽墙 : " + item.content + "\n"; 
+        placeholderText += "AI工作台 : " + item.content + "\n"; 
     });
     universalText.placeholder = placeholderText;
 }
@@ -380,7 +388,7 @@ function onModelChange() {
         apiKeyInput.style.display = "none";
         proxyInput.style.display = "none";
         if(btnCombinedAction) {
-            btnCombinedAction.innerHTML = "🚀 我要吐槽";
+            btnCombinedAction.innerHTML = "🚀 AI调用";
             btnCombinedAction.className = "btn btn-tucao";
         }
     } else if (isImageModel) {
@@ -511,7 +519,7 @@ if(btnCombinedAction) {
         
         if (!checkKeyRequirement(model)) return;
 
-        // 1. 吐槽墙逻辑
+        // 1. AI工作台逻辑
         if (model === "comment-wall") {
             if (!content) return alert("请在文本框输入要吐槽的内容！");
             
@@ -1702,5 +1710,22 @@ window.clearSearch = function() {
 })();
 
 </script>
+
+<script>
+document.addEventListener("DOMContentLoaded",function(){
+ const mode=document.getElementById("apiMode");
+ const url=document.getElementById("apiProxy");
+ if(mode && url){
+   mode.addEventListener("change",function(){
+     if(this.value==="local"){
+       url.value="http://127.0.0.1:11434/v1";
+     }else{
+       url.value="https://api.apimart.ai/v1";
+     }
+   });
+ }
+});
+</script>
+
 </body>
 </html>
