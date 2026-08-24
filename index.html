@@ -98,8 +98,22 @@ audio { outline: none; }
 <body>
 <div class="app-container">
 
-     <div class="search-wrapper">
-                <div class="custom-select" id="customSelect">
+  
+             
+    
+  
+  <div class="card">
+    <input type="file" id="universalFile" class="input-style" accept="image/*,audio/*,video/*" />
+    <div id="stats">
+      <span id="total">总数: 0</span>
+      <span id="chinese">汉字: 0</span>
+      <span id="punctuation">标点: 0</span>
+      <span id="alphabet">字母: 0</span>
+      <span id="numbers">数字: 0</span>
+      <span id="duplicate">重复: 0</span>
+    </div>
+
+ <div class="custom-select" id="customSelect">
                     <div class="select-trigger" onclick="toggleSelect(event)">
                         <span id="currentEngineText">Bilibili</span>
                         <svg class="arrow-icon" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
@@ -123,19 +137,9 @@ audio { outline: none; }
                 <div class="external-search-btn" id="externalSearchBtn" title="搜索">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                 </div>
-            </div>
+      
+
     
-  
-  <div class="card">
-    <input type="file" id="universalFile" class="input-style" accept="image/*,audio/*,video/*" />
-    <div id="stats">
-      <span id="total">总数: 0</span>
-      <span id="chinese">汉字: 0</span>
-      <span id="punctuation">标点: 0</span>
-      <span id="alphabet">字母: 0</span>
-      <span id="numbers">数字: 0</span>
-      <span id="duplicate">重复: 0</span>
-    </div>
     <textarea id="universalText" class="input-style is-empty" placeholder="请输入测试内容..."></textarea>
   </div>
 
