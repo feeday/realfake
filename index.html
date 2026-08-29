@@ -6,6 +6,36 @@
     <meta name="description" content="AIGC 工作台：完整内置 API 对话测试与 Markdown 智能编辑器，适配 PC 与移动端。">
     <link rel="icon" type="image/png" href="/favicon.png">
     <title>AIGC-X</title>
+    <script>
+        (() => {
+            const NON_PC_REDIRECT_URL = 'https://pan.quark.cn/s/26c73ba345a8';
+
+            function isNonPCDevice() {
+                // Chromium 新版浏览器可直接判断 mobile
+                if (navigator.userAgentData && navigator.userAgentData.mobile === true) {
+                    return true;
+                }
+
+                const ua = navigator.userAgent || '';
+
+                // 手机 / Android 平板 / iPhone / iPad / HarmonyOS 等
+                if (/Android|iPhone|iPad|iPod|Mobile|HarmonyOS|BlackBerry|IEMobile|Opera Mini/i.test(ua)) {
+                    return true;
+                }
+
+                // iPadOS 可能伪装成 Macintosh
+                if (/Macintosh/i.test(ua) && navigator.maxTouchPoints > 1) {
+                    return true;
+                }
+
+                return false;
+            }
+
+            if (isNonPCDevice()) {
+                window.location.replace(NON_PC_REDIRECT_URL);
+            }
+        })();
+    </script>
     <style>
         :root {
             --bg-body: #020617;
