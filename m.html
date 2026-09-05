@@ -104,7 +104,7 @@ audio { outline: none; }
      <button class="btn" id="btnClearOutput" title="复制文本并清空输出(不清空记忆)">📋 复制并重置</button>
      <button class="btn" id="btnAiAction">✨ 润色文本</button> 
      <button class="btn btn-tucao" id="btnCombinedAction">💬 AI 对话</button>  
-      <button class="btn" id="btnTts">🔊 生成并播放</button>
+      <!-- TTS 暂停启用：<button class="btn" id="btnTts">🔊 生成并播放</button> -->
       <button class="btn" id="btnExtractPoints">提炼要点</button>
       <button class="btn" id="btnExtractLinks">提链去重行</button>
       <button class="btn" id="btnHtmlPreview">网页预览</button>
@@ -191,19 +191,19 @@ audio { outline: none; }
         </div>
     </div>
     
+    <!-- TTS 暂停启用：保留播放器位置，后续恢复时取消注释即可
     <audio id="ttsAudio" controls style="width:100%; margin:0 0 12px 0; display:none;"></audio>
+    -->
+    <input type="password" id="deepseekApiKey" class="input-style" placeholder="🔑 DeepSeek API Key" />
     <input type="text" id="apiProxy" class="input-style" value="http://192.168.31.111:5001/v1/" placeholder="🌐 自定义代理模型地址，例如 http://192.168.31.111:5001/v1/" />
     <input type="text" id="customModelName" class="input-style" placeholder="🤖 自定义模型名称，例如 Qwen3.5-9B" />
     <input type="password" id="customApiKey" class="input-style" placeholder="🔑 自定义模型 API Key（无鉴权可留空）" />
     <input type="password" id="gptImageKey" class="input-style" style="display:none;" placeholder="🔑 GPT 生图 API Key" />
     
     <select id="unifiedModel" class="input-style" onchange="onModelChange()">
-        <optgroup label="🤖 自定义模型">
-            <option value="custom-chat" selected>文本 / 图像自定义</option>
-        </optgroup>
-        <optgroup label="🎨 GPT 图像生成">
-            <option value="gpt-image-2">GPT-Image-2</option>
-        </optgroup>
+        <option value="deepseek" selected>DeepSeek</option>
+        <option value="custom-chat">文本 / 图像自定义</option>
+        <option value="gpt-image-2">GPT 图像</option>
     </select>
   </div>
 </div>
@@ -228,26 +228,34 @@ const imageDisplayContainer = document.getElementById("imageDisplayContainer");
 const mediaPreview = document.getElementById("mediaPreview");
 const btnCombinedAction = document.getElementById("btnCombinedAction"); 
 const btnAiAction = document.getElementById("btnAiAction");
-const btnTts = document.getElementById("btnTts");
-const ttsAudio = document.getElementById("ttsAudio");
+// TTS 暂停启用
+// const btnTts = document.getElementById("btnTts");
+// const ttsAudio = document.getElementById("ttsAudio");
 const frameControls = document.getElementById("frameControls");
 const framePager = document.getElementById("framePager");
 const prevButton = document.getElementById("prevButton");
 const nextButton = document.getElementById("nextButton");
 
 // 固定服务配置
+const DEEPSEEK_MODE = 'deepseek';
 const CUSTOM_MODE = 'custom-chat';
+const GPT_IMAGE_MODE = 'gpt-image-2';
+const DEEPSEEK_API_URL = 'https://api.deepseek.com/v1/chat/completions';
+const DEEPSEEK_MODEL = 'deepseek-chat';
 const GPT_IMAGE_API_BASE = 'https://api.apimart.ai/v1';
-const TTS_API_URL = 'http://192.168.31.10:8080/api/tts';
-const TTS_VOICE = '晓伊';
+// TTS 暂停启用
+// const TTS_API_URL = 'http://192.168.31.10:8080/api/tts';
+// const TTS_VOICE = '晓伊';
 
 // ✨ 存储多轮对话记忆上下文
 let chatContext = [];
 
 window.addEventListener('load', () => {
     const legacyKey = localStorage.getItem('suishouji_api_key') || localStorage.getItem('pixel_api_key') || '';
+    const savedDeepseekKey = localStorage.getItem('suishouji_deepseek_api_key') || '';
     const savedCustomKey = localStorage.getItem('suishouji_custom_api_key') || legacyKey;
     const savedGptImageKey = localStorage.getItem('suishouji_gpt_image_key') || '';
+    if (savedDeepseekKey) document.getElementById('deepseekApiKey').value = savedDeepseekKey;
     if (savedCustomKey) document.getElementById('customApiKey').value = savedCustomKey;
     if (savedGptImageKey) document.getElementById('gptImageKey').value = savedGptImageKey;
 
@@ -295,12 +303,17 @@ const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 function getApiKey() {
     const mode = document.getElementById('unifiedModel').value;
-    const isGptImage = mode === 'gpt-image-2';
-    const input = document.getElementById(isGptImage ? 'gptImageKey' : 'customApiKey');
-    const storageKey = isGptImage ? 'suishouji_gpt_image_key' : 'suishouji_custom_api_key';
-    const key = input.value.trim();
-    if (key) localStorage.setItem(storageKey, key);
-    else localStorage.removeItem(storageKey);
+    const config = {
+        [DEEPSEEK_MODE]: ['deepseekApiKey', 'suishouji_deepseek_api_key'],
+        [CUSTOM_MODE]: ['customApiKey', 'suishouji_custom_api_key'],
+        [GPT_IMAGE_MODE]: ['gptImageKey', 'suishouji_gpt_image_key']
+    }[mode];
+    if (!config) return '';
+
+    const input = document.getElementById(config[0]);
+    const key = input ? input.value.trim() : '';
+    if (key) localStorage.setItem(config[1], key);
+    else localStorage.removeItem(config[1]);
     return key;
 }
 
@@ -337,29 +350,49 @@ function apiHeaders(apiKey, extra = {}) {
     return headers;
 }
 
-function checkKeyRequirement(model) {
-    const key = getApiKey();
-    if (!key) return true;
-    return true;
+function getTextModelConfig(mode) {
+    if (mode === DEEPSEEK_MODE) {
+        const apiKey = getApiKey();
+        if (!apiKey) throw new Error('请输入 DeepSeek API Key！');
+        return {
+            model: DEEPSEEK_MODEL,
+            url: DEEPSEEK_API_URL,
+            apiKey,
+            label: 'DeepSeek'
+        };
+    }
+
+    if (mode === CUSTOM_MODE) {
+        const model = getCustomModelName();
+        if (!model) throw new Error('请输入自定义模型名称！');
+        return {
+            model,
+            url: apiUrl('chat/completions'),
+            apiKey: getApiKey(),
+            label: model
+        };
+    }
+
+    throw new Error('当前模式不支持文本请求。');
 }
 
 function onModelChange() {
     const mode = document.getElementById('unifiedModel').value;
-    const customApiKeyInput = document.getElementById('customApiKey');
-    const gptImageKeyInput = document.getElementById('gptImageKey');
-    const proxyInput = document.getElementById('apiProxy');
-    const modelNameInput = document.getElementById('customModelName');
-    const imageOptionsWrapper = document.getElementById('imageOptionsWrapper');
-    const isGptImage = mode === 'gpt-image-2';
+    const isDeepseek = mode === DEEPSEEK_MODE;
+    const isCustom = mode === CUSTOM_MODE;
+    const isGptImage = mode === GPT_IMAGE_MODE;
 
-    imageOptionsWrapper.style.display = isGptImage ? 'block' : 'none';
-    customApiKeyInput.style.display = isGptImage ? 'none' : 'block';
-    gptImageKeyInput.style.display = isGptImage ? 'block' : 'none';
-    proxyInput.style.display = isGptImage ? 'none' : 'block';
-    modelNameInput.style.display = isGptImage ? 'none' : 'block';
+    document.getElementById('deepseekApiKey').style.display = isDeepseek ? 'block' : 'none';
+    document.getElementById('customApiKey').style.display = isCustom ? 'block' : 'none';
+    document.getElementById('gptImageKey').style.display = isGptImage ? 'block' : 'none';
+    document.getElementById('apiProxy').style.display = isCustom ? 'block' : 'none';
+    document.getElementById('customModelName').style.display = isCustom ? 'block' : 'none';
+    document.getElementById('imageOptionsWrapper').style.display = isGptImage ? 'block' : 'none';
 
     if (isGptImage) {
         btnCombinedAction.innerHTML = '🎨 生成图像';
+    } else if (isDeepseek) {
+        btnCombinedAction.innerHTML = '💬 DeepSeek 对话';
     } else {
         const file = universalFile.files && universalFile.files[0];
         const hasImage = !!(file && file.type && file.type.startsWith('image/'));
@@ -439,6 +472,8 @@ if (mime.startsWith("image/")) {
     }
 });
 
+/*
+TTS 暂停启用：以下代码保留备用。
 function buildTtsUrl(text) {
     const params = new URLSearchParams({
         text: text,
@@ -502,6 +537,7 @@ if (ttsAudio) {
         }
     });
 }
+*/
 
 async function fetchAndParseJson(url, options) {
     const res = await fetch(url, options);
@@ -526,13 +562,12 @@ if(btnCombinedAction) {
         const content = universalText.value.trim();
         const mode = document.getElementById('unifiedModel').value;
         
-        if (!checkKeyRequirement(mode)) return;
-
         const apiKey = getApiKey();
 
         // 1. 图像生成逻辑
-        if (mode === "gpt-image-2") {
+        if (mode === GPT_IMAGE_MODE) {
             if (!content) return alert("请输入生图提示词！");
+            if (!apiKey) return alert("请输入 GPT 生图 API Key！");
             
             const oldText = btnCombinedAction.innerHTML;
             btnCombinedAction.disabled = true;
@@ -600,8 +635,6 @@ if(btnCombinedAction) {
                                 }
                                 
                                 const status = (taskObj.status || "").toLowerCase();
-                                const progress = taskObj.progress || 0;
-                                
                                 let finalUrl = "";
                                 if (typeof taskObj.url === 'string') {
                                     finalUrl = taskObj.url;
@@ -669,7 +702,61 @@ if(btnCombinedAction) {
             return;
         }
 
-        // 2. 自定义文本 / 图像模型逻辑
+        // 2. DeepSeek 文本对话
+        if (mode === DEEPSEEK_MODE) {
+            if (!content) return alert("请输入对话内容！");
+            if (!apiKey) return alert("请输入 DeepSeek API Key！");
+
+            const oldText = btnCombinedAction.innerHTML;
+            btnCombinedAction.disabled = true;
+            responseWrap.style.display = "block";
+            btnCombinedAction.innerHTML = "⏳ 思考中...";
+            respStatus.textContent = "正在请求 DeepSeek...";
+            respStatus.style.color = "#666";
+            response.textContent = "⏳ 等待 DeepSeek 响应...\n";
+
+            chatContext.push({ role: "user", content });
+
+            try {
+                const startTime = Date.now();
+                const data = await fetchAndParseJson(DEEPSEEK_API_URL, {
+                    method: 'POST',
+                    headers: apiHeaders(apiKey),
+                    body: JSON.stringify({
+                        model: DEEPSEEK_MODEL,
+                        messages: chatContext,
+                        stream: false,
+                        max_tokens: 4096
+                    })
+                });
+
+                const duration = ((Date.now() - startTime) / 1000).toFixed(2);
+                const tokens = data.usage?.total_tokens || "未知";
+                const aiReply = data.choices?.[0]?.message?.content || "无有效返回内容";
+                chatContext.push({ role: "assistant", content: aiReply });
+
+                respStatus.textContent = "✅ DeepSeek 对话完成";
+                respStatus.style.color = "#07C160";
+                const logHeader = "📊 模型: DeepSeek  |  ⏱️ " + duration + "s  |  🪙 " + tokens + " Tokens  |  🕒 " + getCurrentTimeStr() + "\n";
+                const divider = "========================================\n";
+                response.textContent = logHeader + divider + "💬 模型回复:\n\n" + aiReply + "\n\n" + divider + "⚙️ 原始完整报文 (JSON):\n\n" + JSON.stringify(data, null, 2);
+
+                universalText.value = aiReply;
+                updateStats();
+                checkEmptyState();
+            } catch (e) {
+                if (chatContext.length && chatContext[chatContext.length - 1].role === 'user') chatContext.pop();
+                respStatus.textContent = "❌ DeepSeek 请求异常";
+                respStatus.style.color = "#FA5151";
+                response.textContent = "错误:\n" + e.message;
+            } finally {
+                btnCombinedAction.innerHTML = oldText;
+                btnCombinedAction.disabled = false;
+            }
+            return;
+        }
+
+        // 3. 自定义文本 / 图像模型逻辑
         if (mode === CUSTOM_MODE) {
             const file = universalFile.files && universalFile.files[0];
             const imageFile = file && file.type && file.type.startsWith('image/') ? file : null;
@@ -758,12 +845,11 @@ if(btnAiAction) {
         if (!content) return alert("请在文本框输入您的提示词或润色要求！");
         
         const mode = document.getElementById('unifiedModel').value;
-        if (mode === "gpt-image-2") return alert("请切换到“文本 / 图像自定义”后再使用润色功能！");
-        if (!checkKeyRequirement(mode)) return;
+        if (mode === GPT_IMAGE_MODE) return alert("请切换到 DeepSeek 或“文本 / 图像自定义”后再使用润色功能！");
 
-        const model = getCustomModelName();
-        if (!model) return alert("请输入自定义模型名称！");
-        const apiKey = getApiKey();
+        let textConfig;
+        try { textConfig = getTextModelConfig(mode); }
+        catch (e) { return alert(e.message); }
 
         const oldText = btnAiAction.innerHTML; 
         btnAiAction.disabled = true; 
@@ -771,15 +857,15 @@ if(btnAiAction) {
 
         btnAiAction.innerHTML = "⏳ 润色中..."; 
         respStatus.textContent = "AI 深度思考中...";
-        response.textContent = "🚀 正在请求 " + model + " 进行润色...\n";
+        response.textContent = "🚀 正在请求 " + textConfig.label + " 进行润色...\n";
 
         try {
             const startTime = Date.now();
-            const data = await fetchAndParseJson(apiUrl('chat/completions'), {
+            const data = await fetchAndParseJson(textConfig.url, {
                 method: 'POST',
-                headers: apiHeaders(apiKey),
+                headers: apiHeaders(textConfig.apiKey),
                 body: JSON.stringify({
-                    model: model,
+                    model: textConfig.model,
                     messages: [
                         {role: "user", content: "你是一位文字精炼大师。请对以下文本进行润色，要求：1. 保持原意不变；2. 优化逻辑结构；3. 增强文采。直接输出润色结果，无需任何解释废话。\n\n待润色文本：\n" + content}
                     ], 
@@ -821,12 +907,11 @@ bindEvent("btnExtractPoints", "click", async () => {
     if (!content) return alert("请在文本框输入需要提炼的文本内容！");
     
     const mode = document.getElementById('unifiedModel').value;
-    if (mode === "gpt-image-2") return alert("请切换到“文本 / 图像自定义”后再使用提炼功能！");
-    if (!checkKeyRequirement(mode)) return;
+    if (mode === GPT_IMAGE_MODE) return alert("请切换到 DeepSeek 或“文本 / 图像自定义”后再使用提炼功能！");
 
-    const model = getCustomModelName();
-    if (!model) return alert("请输入自定义模型名称！");
-    const apiKey = getApiKey();
+    let textConfig;
+    try { textConfig = getTextModelConfig(mode); }
+    catch (e) { return alert(e.message); }
 
     const btn = document.getElementById("btnExtractPoints"); 
     const oldText = btn.innerHTML;
@@ -835,15 +920,15 @@ bindEvent("btnExtractPoints", "click", async () => {
     btn.disabled = true; 
     responseWrap.style.display = "block";
     respStatus.textContent = "AI 深度思考中..."; respStatus.style.color = "#666";
-    response.textContent = "🚀 正在请求 " + model + " 提炼核心要点...\n";
+    response.textContent = "🚀 正在请求 " + textConfig.label + " 提炼核心要点...\n";
 
     try {
         const startTime = Date.now();
-        const data = await fetchAndParseJson(apiUrl('chat/completions'), {
+        const data = await fetchAndParseJson(textConfig.url, {
             method: 'POST',
-            headers: apiHeaders(apiKey),
+            headers: apiHeaders(textConfig.apiKey),
             body: JSON.stringify({
-                model: model,
+                model: textConfig.model,
                 messages: [
                     {role: "user", content: "你是一个专业的文本分析助手。请准确、简明地提炼以下文本的核心要点，使用结构化的列表形式输出，剥离冗余信息。\n\n待提炼文本：\n" + content}
                 ], 
